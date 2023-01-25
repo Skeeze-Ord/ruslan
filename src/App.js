@@ -3,6 +3,7 @@ import TodoItem from "./components/TodoItem";
 import "./index.css";
 import CreateTodoField from "./components/CreateTodoField";
 import ClearAllTodos from "./components/ClearAllTodos";
+import cn from "classnames";
 
 const data = [
   {
@@ -32,7 +33,6 @@ const App = () => {
     currentID.isCompleted = !currentID.isCompleted;
     setTodos(todosCopy);
   };
-  
 
   const removeTodo = (id) => setTodos([...todos].filter((t) => t.id !== id));
 
@@ -46,13 +46,11 @@ const App = () => {
 
   let [empty, setEmpty] = useState(fieldData.isEmpty);
 
-
   useEffect(() => {
     if (todos.length === 0) {
-      console.log(1);
       setEmpty(!empty);
     }
-  }, [todos]);
+  }, [todos.length]);
 
   return (
     <div className="bg-zinc-900 h-screen py-10">
@@ -68,10 +66,12 @@ const App = () => {
         ))}
         {empty && <ClearAllTodos />}
         <CreateTodoField setTodos={setTodos} />
-        {console.log(fieldData.isEmpty)}
+        {console.log(empty)}
       </div>
       <button
-        className="text-white text-center text-1xl"
+        className={cn(`text-white text-center text-1xl visible`, {
+          "invisible": empty,
+        })}
         onClick={clearAllTodo}
       >
         Delete all
