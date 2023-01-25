@@ -18,7 +18,15 @@ const TodoItem = ({ todo, changeTodo, removeTodo }) => {
         >
           {todo.title}
         </span>
+        <span
+          className={`${
+            todo.isCompleted ? "visible text-zinc-600 ml-3" : "invisible"
+          }`}
+        >
+          done
+        </span>
       </span>
+
       <button onClick={() => removeTodo(todo.id)}>
         <BsTrash
           size={22}

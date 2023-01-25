@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TodoItem from "./components/TodoItem";
 import "./index.css";
 import CreateTodoField from "./components/CreateTodoField";
+import ClearAllTodos from "./components/ClearAllTodos";
 
 const data = [
   {
@@ -34,12 +35,28 @@ const App = () => {
 
   const removeTodo = (id) => setTodos([...todos].filter((t) => t.id !== id));
 
+  const clearAllTodo = () => {
+    const todosCopy = [...todos];
+    todosCopy.length = 0;
+    setTodos(todosCopy);
+  };
+
+  const fieldData = { details: data, isEmpty: false };
+
+  let [empty, setEmpty] = useState(fieldData.isEmpty);
+
+
+  useEffect(() => {
+    if (todos.length === 0) {
+      console.log(1);
+      setEmpty(!empty);
+    }
+  }, [todos]);
+
   return (
     <div className="bg-zinc-900 h-screen py-10">
       <div className="text-white w-4/5 mx-auto">
-        <h1 className="text-2xl font-bold text-center mb-10">
-          Todo for junior
-        </h1>
+        <h1 className="text-2xl font-bold text-center mb-10">Todo list</h1>
         {todos.map((todo) => (
           <TodoItem
             key={todo.id}
@@ -48,8 +65,16 @@ const App = () => {
             removeTodo={removeTodo}
           />
         ))}
+        {empty && <ClearAllTodos />}
         <CreateTodoField setTodos={setTodos} />
+        {console.log(fieldData.isEmpty)}
       </div>
+      <button
+        className="text-white text-center text-1xl"
+        onClick={clearAllTodo}
+      >
+        Delete all
+      </button>
     </div>
   );
 };
