@@ -32,6 +32,7 @@ const App = () => {
     currentID.isCompleted = !currentID.isCompleted;
     setTodos(todosCopy);
   };
+  
 
   const removeTodo = (id) => setTodos([...todos].filter((t) => t.id !== id));
 
