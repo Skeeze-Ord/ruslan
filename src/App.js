@@ -44,12 +44,10 @@ const App = () => {
 
   const fieldData = { details: data, isEmpty: false };
 
-  let [empty, setEmpty] = useState(fieldData.isEmpty);
+  const [empty, setEmpty] = useState(fieldData.isEmpty);
 
   useEffect(() => {
-    if (todos.length === 0) {
-      setEmpty(!empty);
-    }
+    if (todos.length === 0) setEmpty(e => !e);
   }, [todos.length]);
 
   return (
@@ -68,14 +66,21 @@ const App = () => {
         <CreateTodoField setTodos={setTodos} />
         {console.log(empty)}
       </div>
-      <button
-        className={cn(`text-white text-center text-1xl visible`, {
-          "invisible": empty,
-        })}
-        onClick={clearAllTodo}
+      <div
+        className={cn(
+          `text-white text-right flex justify-end pr-48 text-1xl visible`,
+          {
+            "invisible": empty === true,
+          }
+        )}
       >
-        Delete all
-      </button>
+        <button
+          className="bg-zinc-700 p-1.5 rounded-md font-mono"
+          onClick={clearAllTodo}
+        >
+          Delete all
+        </button>
+      </div>
     </div>
   );
 };
