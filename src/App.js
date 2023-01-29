@@ -3,7 +3,6 @@ import TodoItem from "./components/TodoItem";
 import "./index.css";
 import CreateTodoField from "./components/CreateTodoField";
 import ClearAllTodos from "./components/ClearAllTodos";
-import cn from "classnames";
 
 const data = [
   {
@@ -47,7 +46,7 @@ const App = () => {
   const [empty, setEmpty] = useState(fieldData.isEmpty);
 
   useEffect(() => {
-    if (todos.length === 0) setEmpty(e => !e);
+    if (todos.length === 0) setEmpty((e) => !e);
   }, [todos.length]);
 
   return (
@@ -62,25 +61,18 @@ const App = () => {
             removeTodo={removeTodo}
           />
         ))}
-        {empty && <ClearAllTodos />}
+        {todos.length === 0 && <ClearAllTodos />}
         <CreateTodoField setTodos={setTodos} />
         {console.log(empty)}
       </div>
-      <div
-        className={cn(
-          `text-white text-right flex justify-end pr-48 text-1xl visible`,
-          {
-            "invisible": empty === true,
-          }
-        )}
-      >
+      {todos.length > 0 && (
         <button
-          className="bg-zinc-700 p-1.5 rounded-md font-mono"
+          className="bg-zinc-700 p-1.5 rounded-md size-18 float-right mr-36 text-zinc-300"
           onClick={clearAllTodo}
         >
           Delete all
         </button>
-      </div>
+      )}
     </div>
   );
 };
